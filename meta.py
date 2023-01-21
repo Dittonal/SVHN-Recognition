@@ -1,0 +1,28 @@
+import json
+
+# 原数据类
+class Meta(object):
+    def __init__(self):
+        self.num_train_examples = None
+        self.num_val_examples = None
+        self.num_test_examples = None
+
+    # 保存训练集、验证集、测试集json
+    def save(self, path_to_json_file):
+        with open(path_to_json_file, 'w') as f:
+            content = {
+                'num_examples': {
+                    'train': self.num_train_examples,
+                    'val': self.num_val_examples,
+                    'test': self.num_test_examples
+                }
+            }
+            json.dump(content, f)
+
+    # 加载训练集、验证集、测试集json
+    def load(self, path_to_json_file):
+        with open(path_to_json_file, 'r') as f:
+            content = json.load(f)
+            self.num_train_examples = content['num_examples']['train']
+            self.num_val_examples = content['num_examples']['val']
+            self.num_test_examples = content['num_examples']['test']
